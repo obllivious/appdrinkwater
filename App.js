@@ -1,26 +1,94 @@
 
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  Text,
-  View,
+    Text,
+    View,
+    Button,
+    StyleSheet,
+    ImageBackground,
 
 } from 'react-native';
 
 export default class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {Consumido: 0, Mensagem: 'Baixo', pct: 0};
+
+        this.addCopo = this.addCopo.bind(this);
+        this.atualizar = this.atualizar.bind(this);
+    }
+
+    atualizar() {
+        let s = this.state;
+        s.pct = Math.floor((s.Consumido/2000)*100);
+
+        if (s.pct >= 100) {
+            s.Mensagem = "Bom";
+        } else {
+            s.Mensagem = "Baixo";
+        }
+
+        this.setState(s);
+    }
+
+    addCopo() {
+        let s = this.state;
+        s.Consumido += 200;
+        this.setState(s);
+
+        this.atualizar();
+    }
     
     render() {
         return (
         
-            <View style={styles.container}>
+            <View style = {styles.body}>
                 
-                <Text style={styles.welcome}>
-                    ESSA MERDA NÃO FUNCIONAS
-                </Text>
-                
-                <Text style={styles.instructions}>
-                    QUE BOSTA MANO, TÁ DOIDOMA
-                </Text>
+                <ImageBackground source = {require('./images/waterbg.png')} style = {styles.bgimage}>
+
+                    <View>
+
+                        <View style = {styles.infoArea}>
+
+                            <View style = {styles.area}>
+
+                                <Text style = {styles.areaTitulo}>Meta Diária</Text>
+                                <Text style = {styles.areaDado}>2000ml</Text>
+
+                            </View>
+
+                            <View style = {styles.area}>
+
+                                <Text style = {styles.areaTitulo}>Consumido</Text>
+                                <Text style = {styles.areaDado}>{this.state.Consumido}ml</Text>
+
+                            </View>
+
+                            <View style = {styles.area}>
+
+                                <Text style = {styles.areaTitulo}S>Mensagem</Text>
+                                <Text style = {styles.areaDado}>{this.state.Mensagem}</Text>
+
+                            </View>
+
+                        </View>
+
+                        <View style = {styles.pctArea}>
+
+                            <Text style = {styles.pctText}>{this.state.pct}%</Text>
+
+                        </View>
+
+                        <View style = {styles.btnArea}>
+
+                            <Button title = "Beber 200ml" onPress = {this.addCopo}/>
+
+                        </View>
+
+                    </View>
+
+                </ImageBackground>
 
             </View>
         );
@@ -29,17 +97,52 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
 
-    container: {
+    body: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        paddingTop: 20,
     },
 
-    welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+    bgimage: {
+        flex: 1,
+        width: null,
+    },
+
+    infoArea: {
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 77,
+    },
+
+    area: {
+        flex: 1,
+        alignItems: 'center',
+    },
+
+    areaTitulo: {
+        color: '#45b2fc',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+
+    areaDado: {
+        color: '#2b4274',
+        fontSize: 16,
+    },
+
+    pctArea: {
+        marginTop: 250,
+        alignItems: 'center',
+    },
+
+    pctText: {
+        fontSize: 77,
+        color: '#FFFFFF',
+        backgroundColor: 'transparent',
+    },
+
+    btnArea: {
+        marginTop: 44,
+        alignItems: 'center',
     },
 
 });

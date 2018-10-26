@@ -1,2 +1,3 @@
 App DrinkWater.<br/>
-Added project files.
+Added project files.<br/>
+Updated README and App.js
